@@ -27,10 +27,15 @@ public class TodoList {
     }
 
     @DefineKernelFunction(name = "get_list", description = "get list's all contents")
-    public void getList(){
-        for (TodoItemModel item : this.todolist){
-            printItem(item.getId());
+    public String getList() {
+        StringBuilder sb = new StringBuilder();
+        for (TodoItemModel item : this.todolist) {
+            sb.append("ID: ").append(item.getId())
+              .append(", Content: ").append(item.getBody())
+              .append(", Done: ").append(item.isDone())
+              .append("\n");
         }
+        return sb.toString();
     }
 
     @DefineKernelFunction(name = "add_todo", description = "add a todo in todolist")
