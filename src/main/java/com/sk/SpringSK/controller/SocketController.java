@@ -8,6 +8,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.sk.SpringSK.service.KernelService;
 import com.sk.SpringSK.model.AIkit;
 import com.sk.SpringSK.ai.SemanticKernel;
+import com.sk.SpringSK.plugins.TodoList;
 
 public class SocketController extends TextWebSocketHandler {
 
@@ -19,7 +20,6 @@ public class SocketController extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String userMessage = message.getPayload();
         logger.info("Message from client: {}", userMessage);
-        // TODO: 시맨틱 커널
         String res = KernelService.sendMsg(userMessage, this.aikit);
         System.out.println(res);
         session.sendMessage(new TextMessage(res));
@@ -28,7 +28,6 @@ public class SocketController extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         logger.info("New websocket connected: {}", session.getId());
-        // TODO: Kernel 객체 생성
         SemanticKernel kernel = new SemanticKernel();
         this.aikit = kernel.CreateKernel();
     }

@@ -7,10 +7,13 @@ import com.microsoft.semantickernel.Kernel;
 import com.microsoft.semantickernel.aiservices.openai.chatcompletion.OpenAIChatCompletion;
 import com.microsoft.semantickernel.services.chatcompletion.ChatCompletionService;
 import com.microsoft.semantickernel.services.chatcompletion.ChatHistory;
+import com.microsoft.semantickernel.plugin.KernelPlugin;
+import com.microsoft.semantickernel.plugin.KernelPluginFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 import com.sk.SpringSK.model.AIkit;
+import com.sk.SpringSK.plugins.TodoList;
 
 public class SemanticKernel {
 
@@ -38,8 +41,13 @@ public class SemanticKernel {
                 .withOpenAIAsyncClient(client)
                 .withModelId(model)
                 .build();
+        // Plugin 생성
+        KernelPlugin TodoPlugin = KernelPluginFactory.createFromObject(new TodoList(),"TodoList");
         // kernel 생성
-        Kernel kernel = Kernel.builder().withAIService(ChatCompletionService.class, service).build();
+        Kernel kernel = Kernel.builder().
+                        withAIService(ChatCompletionService.class, service).
+                        withPlugin(TodoPlugin).
+                        build();
         // history 생성
         ChatHistory history = new ChatHistory();
         return new AIkit(kernel, history, service);
