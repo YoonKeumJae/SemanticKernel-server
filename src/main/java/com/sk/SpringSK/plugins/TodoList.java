@@ -31,9 +31,9 @@ public class TodoList {
         StringBuilder sb = new StringBuilder();
         for (TodoItemModel item : this.todolist) {
             sb.append("ID: ").append(item.getId())
-              .append(", Content: ").append(item.getBody())
-              .append(", Done: ").append(item.isDone())
-              .append("\n");
+                .append(", Content: ").append(item.getBody())
+                .append(", Done: ").append(item.isDone())
+                .append("\n");
         }
         return sb.toString();
     }
